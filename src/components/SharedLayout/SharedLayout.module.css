@@ -1,0 +1,19 @@
+.navigation {
+  padding: 30px;
+}
+
+.navList {
+  display: flex;
+}
+.navLink {
+  text-decoration: none;
+  color: black;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 15px;
+  margin: 10px;
+}
+
+.navLink:hover {
+  background-color: teal;
+}
