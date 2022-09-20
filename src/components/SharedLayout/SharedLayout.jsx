@@ -1,5 +1,6 @@
 import styles from './SharedLayout.module.css';
 import { NavLink, Outlet } from 'react-router-dom';
+import { Suspense } from 'react';
 
 export const SharedLayout = props => {
   return (
@@ -18,7 +19,9 @@ export const SharedLayout = props => {
           </li>
         </ul>
       </nav>
-      <Outlet />
+      <Suspense>
+        <Outlet />
+      </Suspense>
     </>
   );
 };

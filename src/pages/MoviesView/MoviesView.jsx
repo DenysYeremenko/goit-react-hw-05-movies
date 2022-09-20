@@ -1,26 +1,39 @@
-// import styles from './MoviesView.module.css';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 import { getSearchingMovies } from 'services/getMoviesAPI';
 import { useEffect } from 'react';
+import { MoviesList } from 'components/MoviesList/MoviesList';
+import { Spinner } from 'components/Spinner/Spinner';
 
-export const MoviesView = props => {
+const MoviesView = props => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchResults, setSearchResults] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const query = searchParams.get('query');
   const location = useLocation();
 
   useEffect(() => {
+    query && setIsLoading(true);
     query &&
       getSearchingMovies(query).then(data => {
-        setSearchResults(data);
+        if (data.length > 0) {
+          setSearchResults(data);
+          setIsLoading(false);
+        } else {
+          alert('Sorry, movies not found');
+          setIsLoading(false);
+        }
       });
   }, [query]);
 
   const submitHandler = e => {
     e.preventDefault();
-    const query = e.target[0].value;
+    if (e.target[0].value === '') {
+      alert('Please write the name of the movie');
+      return;
+    }
 
+    const query = e.target[0].value;
     setSearchParams({ query });
   };
 
@@ -30,19 +43,12 @@ export const MoviesView = props => {
         <input type="text" />
         <button type="submit">submit</button>
       </form>
-      {searchResults && (
-        <ul>
-          {searchResults.map(({ original_title, name, id }) => {
-            return (
-              <li key={id}>
-                <Link to={JSON.stringify(id)} state={{ from: location }}>
-                  {original_title ? original_title : name}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+      {isLoading && <Spinner />}
+      {query && searchResults.length > 0 && (
+        <MoviesList moviesData={searchResults} location={location} />
       )}
     </div>
   );
 };
+
+export default MoviesView;

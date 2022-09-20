@@ -1,0 +1,13 @@
+.movieList {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.movieLink {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  font-size: 25px;
+}

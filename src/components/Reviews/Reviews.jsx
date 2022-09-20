@@ -1,33 +1,35 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieById } from 'services/getMoviesAPI';
-// import styles from './Reviews.module.css';
 
-export const Reviews = props => {
+const Reviews = props => {
   const { movieId } = useParams();
-  const [reviewsData, setReviewsData] = useState(null);
+  const [reviewsData, setReviewsData] = useState([]);
 
   useEffect(() => {
     getMovieById(movieId, false, true).then(data => {
-      // const { name, profile_path, character } = data.cast;
       setReviewsData(data.results);
     });
   }, [movieId]);
 
   return (
     <div>
-      {reviewsData && (
+      {reviewsData.length > 0 ? (
         <ul>
           {reviewsData.map(rev => {
             return (
-              <li key={rev.author}>
+              <li key={rev.id}>
                 <h5>{rev.author}</h5>
                 <p>{rev.content}</p>
               </li>
             );
           })}
         </ul>
+      ) : (
+        <h3>Sorry, reviews not found</h3>
       )}
     </div>
   );
 };
+
+export default Reviews;

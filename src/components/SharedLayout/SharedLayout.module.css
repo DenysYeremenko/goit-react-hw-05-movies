@@ -1,19 +1,28 @@
 .navigation {
-  padding: 30px;
+  padding: 10px;
 }
 
 .navList {
   display: flex;
+  gap: 15px;
 }
 .navLink {
-  text-decoration: none;
-  color: black;
-  border: 1px solid black;
-  border-radius: 4px;
+  display: inline-block;
   padding: 15px;
-  margin: 10px;
+  border: 0;
+  text-decoration: none;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(30px);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 25px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  text-transform: uppercase;
 }
 
 .navLink:hover {
-  background-color: teal;
+  color: aqua;
+  background-color: rgba(255, 255, 255, 0.2);
 }

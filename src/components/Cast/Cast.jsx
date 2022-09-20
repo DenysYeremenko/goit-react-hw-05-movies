@@ -3,20 +3,19 @@ import { useParams } from 'react-router-dom';
 import { getMovieById } from 'services/getMoviesAPI';
 import styles from './Cast.module.css';
 
-export const Cast = props => {
+const Cast = () => {
   const { movieId } = useParams();
-  const [castData, setCastData] = useState(null);
+  const [castData, setCastData] = useState([]);
 
   useEffect(() => {
     getMovieById(movieId, true).then(data => {
-      // const { name, profile_path, character } = data.cast;
       setCastData(data.cast);
     });
   }, [movieId]);
 
   return (
     <div>
-      {castData && (
+      {castData.length > 0 ? (
         <ul className={styles.castList}>
           {castData.map(actor => {
             const { name, profile_path, character } = actor;
@@ -37,7 +36,11 @@ export const Cast = props => {
             );
           })}
         </ul>
+      ) : (
+        <h3>Sorry, cast not found</h3>
       )}
     </div>
   );
 };
+
+export default Cast;
